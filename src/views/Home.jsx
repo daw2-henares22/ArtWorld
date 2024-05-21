@@ -1,8 +1,7 @@
 export function Home (){
     return(
-      <div className="bg-gray-100 min-h-screen">
       <div className="container mx-auto py-8">
-          <h1 className="text-4xl font-bold text-center mb-8">ArtWorld</h1>
+          <h1 className="dark:text-white text-4xl font-bold text-center mb-8">ArtWorld</h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Featured Sculpture */}
@@ -27,6 +26,5 @@ export function Home (){
               </div>
           </div>
       </div>
-  </div>
     )
 }

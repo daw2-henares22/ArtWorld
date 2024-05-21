@@ -20,7 +20,7 @@ export function Paintings (){
 
     return(
         <div className="container mx-auto py-8">
-            <h1 className="text-3xl font-bold mb-4">Paintings</h1>
+            <h1 className="dark:text-white text-gray-800 text-3xl font-bold mb-4">Paintings</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {paintings.map(painting => (
                     <div key={painting.id} className="bg-white p-4 rounded-lg shadow-md">

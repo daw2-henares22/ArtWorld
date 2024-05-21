@@ -8,7 +8,7 @@ import { Paintings } from './views/Paintings'
 export default function App() {
 
   return (
-    <div className="">
+    <div className="dark:bg-gray-800 min-h-screen">
       <Header></Header>
       <Routes>
         <Route path='/' element={<Home/>}/>
