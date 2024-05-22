@@ -26,7 +26,7 @@ export function Sculptures (){
                    <div key={painting.id} className="bg-white p-4 rounded-lg shadow-md">
                        <img src={painting.imageUrl} alt={painting.title} className="w-full h-48 object-cover mb-4 rounded-md" />
                        <h2 className="text-xl font-semibold mb-2">{painting.title}</h2>
-                       <p className="text-gray-600">{painting.description}</p>
+                       <p className="text-blue-gray-600">{painting.description}</p>
                    </div>
                ))}
            </div>

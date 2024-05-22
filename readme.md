@@ -1,0 +1,86 @@
+npm create vite .
+    React
+    Javascript
+    npm install
+    npm run dev
+
+-Install Tailwindcss with Vite
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+
+    tailwind.config.js añadir esto:
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+    ],
+
+    Quedaría así:
+    /** @type {import('tailwindcss').Config} */
+    export default {
+        content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+        ],
+        theme: {
+            extend: {},
+        },
+        plugins: [],
+    }
+
+
+-Añadir mas css:
+    npm i @material-tailwind/react
+
+    tailwind.config.js añadir esto:
+        const withMT = require("@material-tailwind/react/utils/withMT");
+        module.exports = withMT({
+        })
+
+    Quedaría así:
+    /** @type {import('tailwindcss').Config} */
+    const withMT = require('@material-tailwind/react/utils/withMT') 
+    module.exports = withMT( {
+        content: [
+            "./index.html",
+            "./src/**/*.{js,ts,jsx,tsx}",
+        ],
+        theme: {
+            extend: {},
+        },
+        plugins: [],
+    })
+
+-Añadí dark mode al proyecto
+    tailwind.js añadir esto:
+        darkMode=['class']
+    
+    Quedaría así:
+        /** @type {import('tailwindcss').Config} */
+        const withMT = require('@material-tailwind/react/utils/withMT') 
+        module.exports = withMT( {
+        content: [
+            "./index.html",
+            "./src/**/*.{js,ts,jsx,tsx}",
+        ],
+        darkMode: ['class'],
+        theme: {
+            extend: {},
+        },
+        plugins: [],
+        })
+
+    Luego metí una fución en el Header.jsx
+        function changeDarkMode(){
+            document.documentElement.classList.toggle('dark')
+        }
+
+    Y puse un onclick a un botton para utilizar el darkMode
+        <button onClick={changeDarkMode} className="h-7 w-7 bg-white dark:bg-blue-gray-800 rounded-md shadow-lg" aria-hidden="true">
+            <ImContrast className='w-full dark:text-white text-blue-gray-800'/>
+        </button>
+
+-Añadir traducción al proyecto
+    npm install i18next react-i18next
+
+    Crear un i18next.jsx en la carpeta src
+    
