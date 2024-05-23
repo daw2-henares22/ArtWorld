@@ -84,3 +84,6 @@ npm create vite .
 
     Crear un i18next.jsx en la carpeta src
     
+
+    https://historia-arte.com/
+    ---------------------

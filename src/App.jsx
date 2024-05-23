@@ -4,6 +4,8 @@ import { Header } from './components/Header'
 import { Home } from './views/Home'
 import { Sculptures } from './views/Sculptures'
 import { Paintings } from './views/Paintings'
+import { Login } from './components/Login'
+import { SignUp } from './components/SignUp'
 
 export default function App() {
 
@@ -14,6 +16,8 @@ export default function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/sculptures' element={<Sculptures/>}/>
         <Route path='/paintings' element={<Paintings/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signUp' element={<SignUp/>}/>
       </Routes>
     </div>
   )
