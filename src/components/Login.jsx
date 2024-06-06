@@ -45,22 +45,22 @@ export function Login(){
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full max-w-[24rem]">
+        <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
           <CardBody className="flex flex-col gap-4">
-            <Typography variant="h4" color="blue-gray">
+            <Typography variant="h4">
               Login
             </Typography>
             <Typography
-              className="mb-3 font-normal"
+              className="mb-3 font-normal text-gray-600 dark:text-gray-300"
               variant="paragraph"
-              color="gray"
             >
               Enter your email and password to Login.
             </Typography>
             <Typography className="-mb-2" variant="h6">
               Your Email
             </Typography>
-            <Input 
+            <Input
+                className="text-gray-600 dark:text-gray-300"
                 label="Email" 
                 size="lg" 
                 name="email"
@@ -69,19 +69,24 @@ export function Login(){
             <Typography className="-mb-2" variant="h6">
               Your Password
             </Typography>
-            <Input 
+            <Input
+                className="text-gray-600 dark:text-gray-300"
                 label="Password" 
                 size="lg" 
                 name="password"
                 type="password"
                 onChange={handleChange}
             />
-            <div className="-ml-2.5 -mt-3">
+            <div className="-ml-2.5 -mt-3 text-gray-600 dark:text-gray-300">
               <Checkbox label="Remember Me" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={handleOpen} fullWidth>
+            <Button 
+              variant="gradient"
+              fullWidth
+              type="submit"
+            >
               Login
             </Button>
             <Typography variant="small" className="mt-4 flex justify-center">
@@ -90,8 +95,7 @@ export function Login(){
                 as="a"
                 href="#signup"
                 variant="small"
-                color="blue-gray"
-                className="ml-1 font-bold"
+                className="ml-1 font-bold text-blue-gray-900 dark:text-blue-gray-100"
                 onClick={handleOpen}
               >
                 <Link to="/signUp">Sign up</Link>

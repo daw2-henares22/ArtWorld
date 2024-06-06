@@ -43,21 +43,20 @@ export function SignUp(){
 
     return(
     <>
-       <Button onClick={handleOpen}>Sign up</Button>
+       <Button onSubmit={handleSubmit} onClick={handleOpen}>Sign up</Button>
       <Dialog
-        onSubmit={handleSubmit}
         size="xs"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full max-w-[24rem]">
+        <Card className="dark:text-white text-blue-gray-900 mx-auto w-full max-w-[24rem]">
           <CardBody className="flex flex-col gap-4">
-            <Typography variant="h4" color="blue-gray">
+            <Typography variant="h4">
               Sign up
             </Typography>
             <Typography
-              className="mb-3 font-normal"
+              className="mb-3 font-normal text-gray-600 dark:text-gray-300"
               variant="paragraph"
               color="gray"
             >
@@ -70,35 +69,42 @@ export function SignUp(){
               label="Name"
               size="lg"
               name="fullName"
+              type="name"
+              required
               onChange={handleChange}
             />
             <Typography className="-mb-2" variant="h6">
               Your Email
             </Typography>
-            <Input 
+            <Input
+              className="text-gray-600 dark:text-gray-300"
               label="Email@gmail.com" 
               size="lg"
               name="email"
+              type="email"
+              required
               onChange={handleChange}
             />
             <Typography className="-mb-2" variant="h6">
               Your Password
             </Typography>
-            <Input 
+            <Input
+              className="text-gray-600 dark:text-gray-300"
               label="Password" 
               size="lg"
               name="password"
               type="password"
+              required
+              autoComplete="current-password"
               onChange={handleChange}
             />
-            <div className="-ml-2.5 -mt-3">
+            <div className="-ml-2.5 -mt-3 text-gray-600 dark:text-gray-300">
               <Checkbox label="Remember Me" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
             <Button 
-              variant="gradient" 
-              onClick={handleOpen} 
+              variant="gradient"
               fullWidth
               type="submit"
             >
@@ -110,8 +116,7 @@ export function SignUp(){
                 as="a"
                 href="#signup"
                 variant="small"
-                color="blue-gray"
-                className="ml-1 font-bold"
+                className="ml-1 font-bold text-blue-gray-900 dark:text-blue-gray-100"
                 onClick={handleOpen}
               >
                 <Link to="/login">Login</Link>

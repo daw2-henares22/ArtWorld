@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LanguageToggleButton } from "./LanguageToggleButton";
 import { Login } from "./Login";
 import { SignUp } from "./SignUp";
+import { Button } from "@material-tailwind/react";
 
 export function Header(){
     const { t } = useTranslation(); // Obtener la función de traducción t()
@@ -11,6 +12,11 @@ export function Header(){
     function changeDarkMode(){
         document.documentElement.classList.toggle('dark')
       }
+
+    function handleLogout(){
+        sessionStorage.removeItem('token')
+        navigate('/')
+    }
 
     return(
         <div className="sm:text-xl dark:bg-white bg-blue-gray-900 py-4">
@@ -27,6 +33,7 @@ export function Header(){
                         <li><LanguageToggleButton/></li>
                         <li><SignUp/></li>
                         <li><Login/></li>
+                        <li><Button onClick={handleLogout}>Logout</Button></li>
                     </ul>
                 </nav>
             </div>

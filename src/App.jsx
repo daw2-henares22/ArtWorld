@@ -6,6 +6,7 @@ import { Sculptures } from './views/Sculptures'
 import { Paintings } from './views/Paintings'
 import { Login } from './components/Login'
 import { SignUp } from './components/SignUp'
+import { Footer } from './components/Footer'
 
 export default function App() {
 
@@ -19,6 +20,7 @@ export default function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
       </Routes>
+      <Footer/>
     </div>
   )
 }
