@@ -32,16 +32,16 @@ export const Login=({setToken})=>{
             setToken(data)
             navigate('/')
         } catch (error) {
-            console.error('Error logging in:', error.message);
-            alert(error.message);
-            if(error.message.includes(!dialogData.password)){
+            // console.error('Error logging in:', error.message);
+            // alert(error);
+            if(!error.message.includes(dialogData.password)){
                 alert('Wrong password')
-            }if(error.message.includes(!dialogData.email)){
-                alert('Wrong email')
+            }else if(!error.message.includes(dialogData.email)){
+                alert('This email is not registered.')
 
-            }if(error.message.includes(!dialogData.email && !dialogData.password)){
-                alert('Wrong email and password')
-            }
+            }// if(!error.message.includes(!dialogData.email && !dialogData.password)){
+            //     alert('Wrong password and email not registered')
+            // }
         }
     }
 

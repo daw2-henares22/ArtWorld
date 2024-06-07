@@ -36,21 +36,39 @@ export function Paintings() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {paintings.map(painting => (
           <div key={painting.id} className="bg-white p-4 rounded-lg shadow-md">
-            <button className="w-full"><img onClick={() => handleOpen(painting)} src={painting.image} alt={t(painting.name)} className="w-full h-48 object-cover mb-4 rounded-md" /></button>
-            <Dialog
-              size="xs"
-              open={open && selectedPainting === painting}
-              handler={handleOpen}
-              className="bg-transparent shadow-none"
-            >
-              <img src={selectedPainting?.image} alt={t(selectedPainting?.name)} className="w-full mb-4 rounded-md" />
-            </Dialog>
+            <img
+              onClick={() => handleOpen(painting)}
+              src={painting.image}
+              alt={t(painting.name)}
+              className="w-full h-auto object-cover cursor-pointer rounded-md"
+            />
             <h2 className="text-xl font-semibold mb-2">{t(painting.name)}</h2>
             <p className="text-blue-gray-600">{t(painting.description)}</p>
             <p className="text-blue-gray-600">Author: {t(painting.author)}</p>
+            <p className="text-blue-gray-600">Status: {t(painting.status)}</p>
           </div>
         ))}
       </div>
+      {selectedPainting && (
+        <Dialog
+          size="lg" // Cambia el tamaño del diálogo para que sea más grande
+          open={open}
+          onClose={() => setOpen(false)}
+          className="bg-transparent shadow-none"
+        >
+          <div className="p-4">
+            <img
+              src={selectedPainting.image}
+              alt={t(selectedPainting.name)}
+              className="w-full h-auto object-contain rounded-md"
+            />
+            <h2 className="text-xl font-semibold mb-2">{t(selectedPainting.name)}</h2>
+            <p className="text-blue-gray-600">{t(selectedPainting.description)}</p>
+            <p className="text-blue-gray-600">Author: {t(selectedPainting.author)}</p>
+            <p className="text-blue-gray-600">Status: {t(selectedPainting.status)}</p>
+          </div>
+        </Dialog>
+      )}
     </div>
   );
 }

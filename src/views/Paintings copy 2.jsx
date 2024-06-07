@@ -11,7 +11,7 @@ export function Paintings() {
 
   const handleOpen = (painting) => {
     setSelectedPainting(painting);
-    setOpen(true);
+    setOpen((cur) => !cur);
   };
 
   useEffect(() => {
@@ -36,11 +36,11 @@ export function Paintings() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {paintings.map(painting => (
           <div key={painting.id} className="bg-white p-4 rounded-lg shadow-md">
-            <button className="w-full"><img onClick={() => handleOpen(painting)} src={painting.image} alt={t(painting.name)} className="w-full h-48 object-cover mb-4 rounded-md" /></button>
+            <img onClick={() => handleOpen(painting)} src={painting.image} alt={t(painting.name)} className="w-full h-48 object-cover mb-4 rounded-md" />
             <Dialog
               size="xs"
               open={open && selectedPainting === painting}
-              handler={handleOpen}
+              onClose={() => setOpen(false)}
               className="bg-transparent shadow-none"
             >
               <img src={selectedPainting?.image} alt={t(selectedPainting?.name)} className="w-full mb-4 rounded-md" />

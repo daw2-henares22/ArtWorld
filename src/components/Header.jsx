@@ -25,7 +25,7 @@ export const Header = ({ token, setToken }) => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white dark:text-blue-gray-800 font-bold"><Link to="/">ArtWorld</Link></div>
         {token && token.user && token.user.user_metadata && (
-          <div className="text-white dark:text-blue-gray-800 font-bold"><Link to="/">{t('Welcome')} {token.user.user_metadata.name}</Link></div>
+          <div className="text-white dark:text-blue-gray-800 font-bold">{t('Welcome')} {token.user.user_metadata.name}</div>
         )}
         <nav>
           <ul className="flex space-x-6 font-semibold">

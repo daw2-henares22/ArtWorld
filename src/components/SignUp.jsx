@@ -25,7 +25,7 @@ export function SignUp(){
           }
         });
         if (error) throw error;
-        alert('Check your email for verification link');
+        alert('Register successfully');
       } catch (error) {
         alert(error.message);  
       }
