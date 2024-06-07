@@ -11,19 +11,11 @@ export function SignUp(){
       name:'', email:'', password:''
     });
 
-    function handleChange(event){
-      setDialogData((prevDialogData)=>{
-        return{
-          ...prevDialogData,
-          [event.target.name]: event.target.value
-        }
-      });
-    }
 
     async function handleSubmit(e){
       e.preventDefault();
       try {
-        const { error } = await supabase.auth.signUp({
+        let { data, error } = await supabase.auth.signUp({
           email: dialogData.email,
           password: dialogData.password,
           options: {
@@ -37,6 +29,15 @@ export function SignUp(){
       } catch (error) {
         alert(error.message);  
       }
+    }
+
+    function handleChange(event){
+      setDialogData((prevDialogData)=>{
+        return{
+          ...prevDialogData,
+          [event.target.name]: event.target.value
+        }
+      });
     }
 
     return(

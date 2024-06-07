@@ -1,15 +1,16 @@
 import { Button, Card, CardBody, CardFooter, Checkbox, Dialog, Input, Typography } from "@material-tailwind/react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../bd/supaBase";
 
-export function Login(){
+export const Login=({setToken})=>{
     const[open, setOpen] = useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
 
-    const [dialogData,setDialogData] = useState({
+    let navigate = useNavigate()
+    const [dialogData, setDialogData] = useState({
         email:'', password:''
-    });
+    })
 
     function handleChange(event){
         setDialogData((prevDialogData)=>{
@@ -23,15 +24,24 @@ export function Login(){
     async function handleSubmit(e){
         e.preventDefault();
         try {
-            const { error } = await supabase.auth.signInWithPassword({
+            let { data, error } = await supabase.auth.signInWithPassword({
                 email: dialogData.email,
                 password: dialogData.password
             });
             if (error) throw error;
-            alert('Login successful');
+            setToken(data)
+            navigate('/')
         } catch (error) {
             console.error('Error logging in:', error.message);
             alert(error.message);
+            if(error.message.includes(!dialogData.password)){
+                alert('Wrong password')
+            }if(error.message.includes(!dialogData.email)){
+                alert('Wrong email')
+
+            }if(error.message.includes(!dialogData.email && !dialogData.password)){
+                alert('Wrong email and password')
+            }
         }
     }
 
