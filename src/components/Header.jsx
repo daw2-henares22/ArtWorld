@@ -5,6 +5,7 @@ import { LanguageToggleButton } from "./LanguageToggleButton";
 import { Login } from "./Login";
 import { SignUp } from "./SignUp";
 import { Button } from "@material-tailwind/react";
+import { useEffect } from "react";
 
 export const Header = ({ token, setToken }) => {
   const { t } = useTranslation(); // Obtener la función de traducción t()
@@ -19,11 +20,22 @@ export const Header = ({ token, setToken }) => {
     setToken(null)
     navigate('/')
   }
+//Animación
+  useEffect(() => {
+    document.querySelectorAll('.span-animate').forEach(span => {
+      span.style.animationDelay = getComputedStyle(span).getPropertyValue('--delay');
+    });
+  }, []);
 
   return (
     <div className="sm:text-xl dark:bg-white bg-blue-gray-900 py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white dark:text-blue-gray-800 font-bold"><Link to="/">ArtWorld</Link></div>
+      <div className="animate-ping text-white dark:text-blue-gray-800 font-bold"><Link to="/">ArtWorld</Link></div>
+      <span className="text-gradient span-animate light-mode" 
+              style={{ '--start-color': '#007CF0', '--end-color': '#00DFD8', '--delay': '0s' }}>ArtWorld</span>
+        <span className="text-gradient span-animate dark-mode hidden" 
+              style={{ '--start-color': '#FF4D4D', '--end-color': '#F9CB28', '--delay': '0s' }}>ArtWorld</span>
+      
         {token && token.user && token.user.user_metadata && (
           <div className="text-white dark:text-blue-gray-800 font-bold">{t('Welcome')} {token.user.user_metadata.name}</div>
         )}
