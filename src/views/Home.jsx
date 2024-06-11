@@ -33,7 +33,7 @@ export function Home (){
       </div>
       <div className="relative h-full w-full">
         <img
-          src="public/venus.png"
+          src="/venus.png"
           alt="image 2"
           className="h-full w-full object-cover"
         />

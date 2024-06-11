@@ -18,24 +18,29 @@ export const Login = () => {
     }));
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e){
     e.preventDefault();
     try {
-      let { data, error } = await supabase.auth.signInWithPassword({
-        email: dialogData.email,
-        password: dialogData.password
-      });
-      if (error) throw error;
-      setToken(data);
-      navigate('/');
+        let { data, error } = await supabase.auth.signInWithPassword({
+            email: dialogData.email,
+            password: dialogData.password
+        });
+        if (error) throw error;
+        setToken(data)
+        navigate('/')
     } catch (error) {
-      if (error.message.includes("Invalid login credentials")) {
-        alert('Invalid email or password.');
-      } else {
-        alert('An error occurred. Please try again.');
-      }
+        // console.error('Error logging in:', error.message);
+        // alert(error);
+        if(!error.message.includes(dialogData.password)){
+            alert('Wrong password')
+        }else if(!error.message.includes(dialogData.email)){
+            alert('This email is not registered.')
+
+        }// if(!error.message.includes(!dialogData.email && !dialogData.password)){
+        //     alert('Wrong password and email not registered')
+        // }
     }
-  }
+}
 
   return (
     <>
