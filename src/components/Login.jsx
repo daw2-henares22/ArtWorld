@@ -54,9 +54,9 @@ export const Login = () => {
                 Enter your email and password to Login.
               </Typography>
               <Typography className="-mb-2" variant="h6">Your Email</Typography>
-              <Input className="text-gray-600 dark:text-gray-300" label="Email" size="lg" name="email" type="email" required onChange={handleChange} />
+              <Input color="blue-gray" className="dark:text-gray-300" label="Email" size="lg" name="email" type="email" required onChange={handleChange} />
               <Typography className="-mb-2" variant="h6">Your Password</Typography>
-              <Input className="text-gray-600 dark:text-gray-300" label="Password" size="lg" name="password" type="password" required autoComplete="current-password" onChange={handleChange} />
+              <Input color="blue-gray" className="dark:text-gray-300" label="Password" size="lg" name="password" type="password" required autoComplete="current-password" onChange={handleChange} />
               <div className="-ml-2.5 -mt-3 text-gray-600 dark:text-gray-300">
                 <Checkbox label="Remember Me" />
               </div>

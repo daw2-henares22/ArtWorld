@@ -54,18 +54,17 @@ export function SignUp(){
                 handler={handleOpen}
                 className="bg-transparent shadow-none"
             >
-                <Card className="dark:text-white text-blue-gray-900 mx-auto w-full max-w-[24rem]">
+                <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
                     <form onSubmit={handleSubmit}>
                         <CardBody className="flex flex-col gap-4">
                             <Typography variant="h4">
                                 Sign up
                             </Typography>
                             <Typography
-                                className="mb-3 font-normal text-gray-600 dark:text-gray-300"
+                                className="mb-3 font-normal dark:text-gray-300"
                                 variant="paragraph"
-                                color="gray"
                             >
-                                Enter your email and password to Sign Up.
+                                Enter the credentials to SignUp.
                             </Typography>
                             <Typography className="-mb-2" variant="h6">
                                 Name
@@ -77,24 +76,26 @@ export function SignUp(){
                                 type="text"
                                 required
                                 onChange={handleChange}
+                                color="blue-gray"
+                                className="dark:text-gray-300"
                             />
                             <Typography className="-mb-2" variant="h6">
                                 Your Email
                             </Typography>
                             <Input
-                                className="text-gray-600 dark:text-gray-300"
                                 label="Email@gmail.com" 
                                 size="lg"
                                 name="email"
                                 type="email"
                                 required
                                 onChange={handleChange}
+                                color="blue-gray"
+                                className="dark:text-gray-300"
                             />
                             <Typography className="-mb-2" variant="h6">
                                 Your Password
                             </Typography>
                             <Input
-                                className="text-gray-600 dark:text-gray-300"
                                 label="Password" 
                                 size="lg"
                                 name="password"
@@ -102,10 +103,9 @@ export function SignUp(){
                                 required
                                 autoComplete="current-password"
                                 onChange={handleChange}
+                                color="blue-gray"
+                                className="dark:text-gray-300"
                             />
-                            <div className="-ml-2.5 -mt-3 text-gray-600 dark:text-gray-300">
-                                <Checkbox label="Remember Me" />
-                            </div>
                         </CardBody>
                         <CardFooter className="pt-0">
                             <Button 

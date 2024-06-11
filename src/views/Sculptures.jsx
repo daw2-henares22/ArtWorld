@@ -21,7 +21,6 @@ export function Sculptures() {
     status: false
   });
 
-  // State for editing a sculpture
   const [editSculpture, setEditSculpture] = useState(null);
 
   const handleOpen = (sculpture) => {
@@ -162,47 +161,55 @@ export function Sculptures() {
           <form onSubmit={editSculpture ? handleEditSubmit : handleSubmit}>
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4">{editSculpture ? 'Edit Sculpture' : 'Add New Sculpture'}</Typography>
-              <Input
-                label="Name"
-                size="lg"
-                name="name"
-                required
-                value={newSculpture.name}
-                onChange={handleChange}
-              />
-              <Input
-                label="Description"
-                size="lg"
-                name="description"
-                required
-                value={newSculpture.description}
-                onChange={handleChange}
-              />
-              <Input
-                label="Author"
-                size="lg"
-                name="author"
-                required
-                value={newSculpture.author}
-                onChange={handleChange}
-              />
-              <Input
-                label="Image URL"
-                size="lg"
-                name="image"
-                required
-                value={newSculpture.image}
-                onChange={handleChange}
-              />
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  name="status"
-                  checked={newSculpture.status}
-                  onChange={() => setNewSculpture(prev => ({ ...prev, status: !prev.status }))}
+                <Input
+                  label="Name"
+                  size="lg"
+                  color='blue-gray'
+                  name="name"
+                  required
+                  value={newSculpture.name}
+                  onChange={handleChange}
+                  className="dark:text-gray-300"
                 />
-                <span>Status</span>
-              </label>
+                <Input
+                  label="Description"
+                  size="lg"
+                  color='blue-gray'
+                  name="description"
+                  required
+                  value={newSculpture.description}
+                  onChange={handleChange}
+                  className="dark:text-gray-300"
+                />
+                <Input
+                  label="Author"
+                  size="lg"
+                  color='blue-gray'
+                  name="author"
+                  required
+                  value={newSculpture.author}
+                  onChange={handleChange}
+                  className="dark:text-gray-300"
+                />
+                <Input
+                  label="Image URL"
+                  size="lg"
+                  color='blue-gray'
+                  name="image"
+                  required
+                  value={newSculpture.image}
+                  onChange={handleChange}
+                  className="dark:text-gray-300"
+                />
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="status"
+                    checked={newSculpture.status}
+                    onChange={() => setNewSculpture(prev => ({ ...prev, status: !prev.status }))}
+                  />
+                  <span>Status</span>
+                </label>
             </CardBody>
             <CardFooter className="pt-0">
               <Button variant="gradient" fullWidth type="submit">
