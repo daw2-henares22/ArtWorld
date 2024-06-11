@@ -8,7 +8,7 @@ export function Home (){
         <Carousel className="">
       <div className="relative h-full w-full">
         <img
-          src="public/jacob.png"
+          src="/jacob.png"
           alt="image 1"
           className="h-full w-full object-cover"
         />
@@ -58,7 +58,7 @@ export function Home (){
       </div>
       <div className="relative h-full w-full">
         <img
-          src="public/spanish.png"
+          src="/spanish.png"
           alt="image 3"
           className="h-full w-full object-cover"
         />
