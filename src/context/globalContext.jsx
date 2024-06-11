@@ -1,28 +1,34 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-export const GlobalContext = createContext();
+const GlobalContext = createContext();
 
-export function GlobalProvider ({ children }) {
-    
-    const [api, setApi]= useState([])
-    const [dataApi, setDataApi]= useState({})
+export const GlobalProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch('https://api.artic.edu/api/v1/artworks');
-            const dataFetch = await response.json();
-            setApi(dataFetch.api);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        }
-        fetchData();
-      }, []);
+  const isAdmin = token?.user?.email === 'henareshidalgoruben@fpllefia.com';
 
-    return(
-        <GlobalContext.Provider value={{ api, dataApi, setDataApi }}>
-            {children}
-        </GlobalContext.Provider>
-    )
-}
+  useEffect(() => {
+    const savedToken = sessionStorage.getItem('token');
+    if (savedToken) {
+      setToken(JSON.parse(savedToken));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      sessionStorage.setItem('token', JSON.stringify(token));
+    } else {
+      sessionStorage.removeItem('token');
+    }
+  }, [token]);
+
+  return (
+    <GlobalContext.Provider value={{ token, setToken, isAdmin }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
+
+export const useGlobalContext = () => {
+  return useContext(GlobalContext);
+};

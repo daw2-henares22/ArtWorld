@@ -87,5 +87,36 @@ npm create vite .
 
     https://historia-arte.com/
     ---------------------
+    tailwindcss animated:
+    Sirve para poner mas aniamciones y sus configuraciones
 
-https://youtu.be/I1zzgAfSUBQ
+https://www.tailwindcss-animated.com/
+https://github.com/new-data-services/tailwindcss-animated#readme
+
+npm i tailwindcss-animated
+
+// tailwind.config.js
+module.exports = {
+  // ...
+  plugins: [
+    require('tailwindcss-animated')
+  ],
+}
+
+en este caso solo copias el require('tailwindcss-animated') y el tailwind.config.js te quedaría así:
+
+/** @type {import('tailwindcss').Config} */
+const withMT = require('@material-tailwind/react/utils/withMT') 
+module.exports = withMT( {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: ['class'],
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    require('tailwindcss-animated')
+  ],
+})

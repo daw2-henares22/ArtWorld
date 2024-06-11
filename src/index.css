@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Custom CSS for animations */
-@keyframes animated {
+/* @keyframes animated {
     0%, 16.667%, 100% { opacity: 1; }
     33.333%, 83.333% { opacity: 0; }
   }
@@ -14,9 +14,7 @@
     -webkit-text-fill-color: transparent;
   }
   
-  .span-animate {
-    animation: animated 9s infinite;
-  }
+  
 
   .light-mode {
     display: block;
@@ -32,4 +30,4 @@
   
   .dark .dark-mode {
     display: block;
-  }
+  } */
