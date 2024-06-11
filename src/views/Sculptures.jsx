@@ -9,6 +9,7 @@ export function Sculptures() {
   const { isAdmin } = useGlobalContext();
   const [sculptures, setSculptures] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openN, setOpenN] = useState(false);
   const [selectedSculpture, setSelectedSculpture] = useState(null);
 
   // State for the new sculpture form
@@ -20,13 +21,26 @@ export function Sculptures() {
     status: false
   });
 
+  // State for editing a sculpture
+  const [editSculpture, setEditSculpture] = useState(null);
+
   const handleOpen = (sculpture) => {
     setSelectedSculpture(sculpture);
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpenN = () => setOpenN((cur) => !cur);
+
+  const handleOpenEdit = (sculpture) => {
+    setEditSculpture(sculpture);
+    setNewSculpture({
+      name: sculpture.name,
+      description: sculpture.description,
+      author: sculpture.author,
+      image: sculpture.image,
+      status: sculpture.status
+    });
+    setOpenN(true);
   };
 
   useEffect(() => {
@@ -57,8 +71,23 @@ export function Sculptures() {
     }
   };
 
-  const handleEdit = (sculpture) => {
-    // Handle edit functionality
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data, error } = await supabase.from('Sculptures').update(newSculpture).eq('id', editSculpture.id).select();
+      if (error) {
+        throw error;
+      }
+      if (!data || data.length === 0) {
+        throw new Error('Update failed, no data returned.');
+      }
+      setSculptures(sculptures.map(sculpture => (sculpture.id === editSculpture.id ? data[0] : sculpture)));
+      setNewSculpture({ name: '', description: '', author: '', image: '', status: false });
+      setEditSculpture(null);
+      setOpenN(false);
+    } catch (error) {
+      console.error('Error updating sculpture:', error.message);
+    }
   };
 
   // Handle input changes for the new sculpture form
@@ -81,20 +110,22 @@ export function Sculptures() {
         throw new Error('Insert failed, no data returned.');
       }
       setSculptures([...sculptures, data[0]]);
-      setOpen(false);
       setNewSculpture({ name: '', description: '', author: '', image: '', status: false });
+      setOpenN(false);
     } catch (error) {
       console.error('Error adding sculpture:', error.message);
     }
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 relative">
       <h1 className="dark:text-white text-blue-gray-800 text-3xl font-bold mb-4">{t('Sculptures')}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {sculptures.map(sculpture => (
           <div key={sculpture.id} className="bg-white p-4 rounded-lg shadow-md">
-             <button className="w-full transition duration-150 hover:scale-x-105 hover:scale-y-105"><img onClick={() => handleOpen(sculpture)} src={sculpture.image} alt={t(sculpture.name)} className="w-full h-48 object-cover mb-4 rounded-md" /></button>
+            <button className="w-full transition duration-150 hover:scale-x-105 hover:scale-y-105">
+              <img onClick={() => handleOpen(sculpture)} src={sculpture.image} alt={t(sculpture.name)} className="w-full h-48 object-cover mb-4 rounded-md" />
+            </button>
             <Dialog
               size="xs"
               open={open && selectedSculpture === sculpture}
@@ -108,7 +139,7 @@ export function Sculptures() {
             <p className="text-blue-gray-600">Author: {t(sculpture.author)}</p>
             {isAdmin && (
               <div className="flex justify-between mt-4">
-                <button onClick={() => handleEdit(sculpture)} className="bg-blue-500 text-white py-2 px-4 rounded-md">Edit</button>
+                <button onClick={() => handleOpenEdit(sculpture)} className="bg-blue-500 text-white py-2 px-4 rounded-md">Edit</button>
                 <button onClick={() => handleDelete(sculpture.id)} className="bg-red-500 text-white py-2 px-4 rounded-md">Delete</button>
               </div>
             )}
@@ -118,7 +149,7 @@ export function Sculptures() {
 
       {isAdmin && (
         <Button
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenN(true)}
           className="fixed bottom-4 right-4"
           variant="gradient"
         >
@@ -126,16 +157,17 @@ export function Sculptures() {
         </Button>
       )}
 
-      <Dialog open={open} handler={handleClose} size="xs" className="bg-transparent shadow-none">
+      <Dialog open={openN} handler={handleOpenN} size="xs" className="bg-transparent shadow-none">
         <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={editSculpture ? handleEditSubmit : handleSubmit}>
             <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4">Add New Sculpture</Typography>
+              <Typography variant="h4">{editSculpture ? 'Edit Sculpture' : 'Add New Sculpture'}</Typography>
               <Input
                 label="Name"
                 size="lg"
                 name="name"
                 required
+                value={newSculpture.name}
                 onChange={handleChange}
               />
               <Input
@@ -143,6 +175,7 @@ export function Sculptures() {
                 size="lg"
                 name="description"
                 required
+                value={newSculpture.description}
                 onChange={handleChange}
               />
               <Input
@@ -150,6 +183,7 @@ export function Sculptures() {
                 size="lg"
                 name="author"
                 required
+                value={newSculpture.author}
                 onChange={handleChange}
               />
               <Input
@@ -157,6 +191,7 @@ export function Sculptures() {
                 size="lg"
                 name="image"
                 required
+                value={newSculpture.image}
                 onChange={handleChange}
               />
               <label className="flex items-center space-x-2">
@@ -171,7 +206,7 @@ export function Sculptures() {
             </CardBody>
             <CardFooter className="pt-0">
               <Button variant="gradient" fullWidth type="submit">
-                Add Sculpture
+                {editSculpture ? 'Update Sculpture' : 'Add Sculpture'}
               </Button>
             </CardFooter>
           </form>
