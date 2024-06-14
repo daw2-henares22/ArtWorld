@@ -11,8 +11,6 @@ export function Paintings() {
   const [open, setOpen] = useState(false);
   const [openN, setOpenN] = useState(false);
   const [selectedPainting, setSelectedPainting] = useState(null);
-
-  // State for the new painting form
   const [newPainting, setNewPainting] = useState({
     name: '',
     description: '',
@@ -20,8 +18,6 @@ export function Paintings() {
     image: '',
     status: false
   });
-
-  // State for editing a painting
   const [editPainting, setEditPainting] = useState(null);
 
   const handleOpen = (painting) => {
@@ -29,7 +25,7 @@ export function Paintings() {
     setOpen(true);
   };
 
-  const handleOpenN = () => setOpenN((cur) => !cur);
+  const handleOpenN = () => setOpenN(!openN);
 
   const handleOpenEdit = (painting) => {
     setEditPainting(painting);
@@ -71,155 +67,99 @@ export function Paintings() {
     }
   };
 
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data, error } = await supabase.from('Paintings').update(newPainting).eq('id', editPainting.id).select();
-      if (error) {
-        throw error;
-      }
-      if (!data || data.length === 0) {
-        throw new Error('Update failed, no data returned.');
-      }
-      setPaintings(paintings.map(painting => (painting.id === editPainting.id ? data[0] : painting)));
-      setNewPainting({ name: '', description: '', author: '', image: '', status: false });
-      setEditPainting(null);
-      setOpenN(false);
-    } catch (error) {
-      console.error('Error updating painting:', error.message);
-    }
+  const handleChange = (event) => {
+    setNewPainting({
+      ...newPainting,
+      [event.target.name]: event.target.value
+    });
   };
 
-  // Handle input changes for the new painting form
-  const handleChange = (e) => {
-    setNewPainting((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  // Handle form submission for the new painting form
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data, error } = await supabase.from('Paintings').insert([newPainting]).select();
-      if (error) {
-        throw error;
+      if (editPainting) {
+        const { error } = await supabase.from('Paintings').update(newPainting).eq('id', editPainting.id);
+        if (error) throw error;
+        setPaintings(paintings.map(painting => painting.id === editPainting.id ? newPainting : painting));
+      } else {
+        const { data, error } = await supabase.from('Paintings').insert([newPainting]);
+        if (error) throw error;
+        setPaintings([...paintings, ...data]);
       }
-      if (!data || data.length === 0) {
-        throw new Error('Insert failed, no data returned.');
-      }
-      setPaintings([...paintings, data[0]]);
-      setNewPainting({ name: '', description: '', author: '', image: '', status: false });
       setOpenN(false);
+      setNewPainting({ name: '', description: '', author: '', image: '', status: false });
+      setEditPainting(null);
     } catch (error) {
-      console.error('Error adding painting:', error.message);
+      console.error('Error saving painting:', error.message);
     }
   };
 
   return (
-    <div className="container mx-auto py-8 relative">
-      <h1 className="dark:text-white text-blue-gray-800 text-3xl font-bold mb-4">{t('Paintings')}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {paintings.map(painting => (
-          <div key={painting.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
-            <button className="w-full transition duration-150 hover:scale-x-105 hover:scale-y-105">
-              <img onClick={() => handleOpen(painting)} src={painting.image} alt={t(painting.name)} className="w-full h-48 object-cover mb-4 rounded-md" />
-            </button>
-            <Dialog
-              size="xs"
-              open={open && selectedPainting === painting}
-              handler={handleOpen}
-              className="bg-transparent shadow-none"
-            >
-              <img src={selectedPainting?.image} alt={t(selectedPainting?.name)} className="w-full mb-4 rounded-md" />
-            </Dialog>
-            <h2 className="text-xl font-semibold mb-2 dark:text-white">{t(painting.name)}</h2>
-            <p className="text-blue-gray-600 dark:text-blue-gray-100">{t(painting.description)}</p>
-            <p className="text-blue-gray-600 dark:text-blue-gray-100">Author: {t(painting.author)}</p>
-            {isAdmin && (
-              <div className="flex justify-between mt-4">
-                <button onClick={() => handleOpenEdit(painting)} className="bg-blue-500 text-white py-2 px-4 rounded-md">Edit</button>
-                <button onClick={() => handleDelete(painting.id)} className="bg-red-500 text-white py-2 px-4 rounded-md">Delete</button>
-              </div>
-            )}
-          </div>
-        ))}
+    <>
+      <div>
+        {isAdmin && (
+          <Button onClick={handleOpenN} className="mb-4">Añadir Nueva Pintura</Button>
+        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {paintings.map(painting => (
+            <Card key={painting.id} className="dark:bg-blue-gray-900 dark:text-white">
+              <CardBody>
+                <Typography variant="h5">{painting.name}</Typography>
+                <Typography variant="paragraph">{painting.description}</Typography>
+                <Typography variant="small">{painting.author}</Typography>
+                <img src={painting.image} alt={painting.name} className="w-full h-48 object-cover mt-2"/>
+              </CardBody>
+              <CardFooter className="flex justify-between">
+                {isAdmin && (
+                  <>
+                    <Button size="sm" onClick={() => handleOpenEdit(painting)}>Editar</Button>
+                    <Button size="sm" color="red" onClick={() => handleDelete(painting.id)}>Eliminar</Button>
+                  </>
+                )}
+                <Button size="sm" onClick={() => handleOpen(painting)}>Ver más</Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+
+        {/* Diálogo para Ver más */}
+        {selectedPainting && (
+          <Dialog size="lg" open={open} handler={() => setOpen(false)} className="bg-transparent shadow-none">
+            <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
+              <CardBody>
+                <Typography variant="h5">{selectedPainting.name}</Typography>
+                <Typography variant="paragraph">{selectedPainting.description}</Typography>
+                <Typography variant="small">{selectedPainting.author}</Typography>
+                <img src={selectedPainting.image} alt={selectedPainting.name} className="w-full h-48 object-cover mt-2"/>
+              </CardBody>
+              <CardFooter className="pt-0">
+                <Button onClick={() => setOpen(false)}>Cerrar</Button>
+              </CardFooter>
+            </Card>
+          </Dialog>
+        )}
+
+        {/* Diálogo para Añadir/Editar Pintura */}
+        <Dialog size="xs" open={openN} handler={handleOpenN} className="bg-transparent shadow-none">
+          <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
+            <form onSubmit={handleSubmit}>
+              <CardBody className="flex flex-col gap-4">
+                <Typography variant="h4">{editPainting ? 'Editar Pintura' : 'Añadir Nueva Pintura'}</Typography>
+                <Input color="blue-gray" label="Nombre" size="lg" name="name" value={newPainting.name} onChange={handleChange} required />
+                <Input color="blue-gray" label="Descripción" size="lg" name="description" value={newPainting.description} onChange={handleChange} required />
+                <Input color="blue-gray" label="Autor" size="lg" name="author" value={newPainting.author} onChange={handleChange} required />
+                <Input color="blue-gray" label="Imagen" size="lg" name="image" value={newPainting.image} onChange={handleChange} required />
+                <Input type="checkbox" label="Activo" name="status" checked={newPainting.status} onChange={() => setNewPainting({ ...newPainting, status: !newPainting.status })} />
+              </CardBody>
+              <CardFooter className="pt-0">
+                <Button variant="gradient" fullWidth type="submit">
+                  {editPainting ? 'Guardar Cambios' : 'Añadir Pintura'}
+                </Button>
+              </CardFooter>
+            </form>
+          </Card>
+        </Dialog>
       </div>
-
-      {isAdmin && (
-        <Button
-          onClick={() => setOpenN(true)}
-          className="fixed bottom-4 right-4"
-          variant="gradient"
-        >
-          Add Painting
-        </Button>
-      )}
-
-      <Dialog open={openN} handler={handleOpenN} size="xs" className="bg-transparent shadow-none">
-        <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
-          <form onSubmit={editPainting ? handleEdit : handleSubmit}>
-            <CardBody className="flex flex-col gap-4">
-              <Typography variant="h4">{editPainting ? 'Edit Painting' : 'Add New Painting'}</Typography>
-              <Input
-                label="Name"
-                size="lg"
-                color='blue-gray'
-                name="name"
-                required
-                value={newPainting.name}
-                onChange={handleChange}
-                className="dark:text-gray-300"
-              />
-              <Input
-                label="Description"
-                size="lg"
-                color='blue-gray'
-                name="description"
-                required
-                value={newPainting.description}
-                onChange={handleChange}
-                className="dark:text-gray-300"
-              />
-              <Input
-                label="Author"
-                size="lg"
-                color='blue-gray'
-                name="author"
-                required
-                value={newPainting.author}
-                onChange={handleChange}
-                className="dark:text-gray-300"
-              />
-              <Input
-                label="Image URL"
-                size="lg"
-                color='blue-gray'
-                name="image"
-                required
-                value={newPainting.image}
-                onChange={handleChange}
-                className="dark:text-gray-300"
-              />
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  name="status"
-                  checked={newPainting.status}
-                  onChange={() => setNewPainting(prev => ({ ...prev, status: !prev.status }))}
-                />
-                <span>Status</span>
-              </label>
-            </CardBody>
-            <CardFooter className="pt-0">
-              <Button variant="gradient" fullWidth type="submit">
-                {editPainting ? 'Update Painting' : 'Add Painting'}
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
-      </Dialog>
-    </div>
+    </>
   );
 }
