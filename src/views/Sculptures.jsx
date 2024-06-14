@@ -12,7 +12,6 @@ export function Sculptures() {
   const [openN, setOpenN] = useState(false);
   const [selectedSculpture, setSelectedSculpture] = useState(null);
 
-  // State for the new sculpture form
   const [newSculpture, setNewSculpture] = useState({
     name: '',
     description: '',
@@ -28,7 +27,17 @@ export function Sculptures() {
     setOpen(true);
   };
 
-  const handleOpenN = () => setOpenN((cur) => !cur);
+  const handleOpenN = () => {
+    setEditSculpture(null);
+    setNewSculpture({
+      name: '',
+      description: '',
+      author: '',
+      image: '',
+      status: false
+    });
+    setOpenN((cur) => !cur);
+  };
 
   const handleOpenEdit = (sculpture) => {
     setEditSculpture(sculpture);
@@ -89,7 +98,6 @@ export function Sculptures() {
     }
   };
 
-  // Handle input changes for the new sculpture form
   const handleChange = (e) => {
     setNewSculpture((prev) => ({
       ...prev,
@@ -97,7 +105,6 @@ export function Sculptures() {
     }));
   };
 
-  // Handle form submission for the new sculpture form
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -121,7 +128,7 @@ export function Sculptures() {
       <h1 className="dark:text-white text-blue-gray-800 text-3xl font-bold mb-4">{t('Sculptures')}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {sculptures.map(sculpture => (
-          <div key={sculpture.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+          <div key={sculpture.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex flex-col h-full">
             <button className="w-full transition duration-150 hover:scale-x-105 hover:scale-y-105">
               <img onClick={() => handleOpen(sculpture)} src={sculpture.image} alt={t(sculpture.name)} className="w-full h-48 object-cover mb-4 rounded-md" />
             </button>
@@ -134,26 +141,24 @@ export function Sculptures() {
               <img src={selectedSculpture?.image} alt={t(selectedSculpture?.name)} className="w-full mb-4 rounded-md" />
             </Dialog>
             <h2 className="text-xl font-semibold mb-2 dark:text-white">{t(sculpture.name)}</h2>
-            <p className="text-blue-gray-600 dark:text-blue-gray-100">{t(sculpture.description)}</p>
-            <p className="text-blue-gray-600 dark:text-blue-gray-100">Author: {t(sculpture.author)}</p>
+            <div className="flex flex-col flex-grow">
+              <p className="text-blue-gray-600 dark:text-blue-gray-100 mb-2">{t(sculpture.description)}</p>
+              <p className="text-blue-gray-600 dark:text-blue-gray-100">Author: {t(sculpture.author)}</p>
+            </div>
             {isAdmin && (
-              <div className="flex justify-between mt-4">
-                <button onClick={() => handleOpenEdit(sculpture)} className="bg-blue-500 text-white py-2 px-4 rounded-md">Edit</button>
-                <button onClick={() => handleDelete(sculpture.id)} className="bg-red-500 text-white py-2 px-4 rounded-md">Delete</button>
+              <div className="mt-4 flex justify-between">
+                <Button size="sm" color="blue" onClick={() => handleOpenEdit(sculpture)}>Edit</Button>
+                <Button size="sm" color="red" onClick={() => handleDelete(sculpture.id)}>Delete</Button>
               </div>
             )}
           </div>
         ))}
       </div>
-
+      
       {isAdmin && (
-        <Button
-          onClick={() => setOpenN(true)}
-          className="fixed bottom-4 right-4"
-          variant="gradient"
-        >
-          Add Sculpture
-        </Button>
+        <div className="fixed bottom-4 right-4">
+          <Button onClick={handleOpenN} variant="gradient">Add Sculpture</Button>
+        </div>
       )}
 
       <Dialog open={openN} handler={handleOpenN} size="xs" className="bg-transparent shadow-none">
@@ -161,55 +166,55 @@ export function Sculptures() {
           <form onSubmit={editSculpture ? handleEditSubmit : handleSubmit}>
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4">{editSculpture ? 'Edit Sculpture' : 'Add New Sculpture'}</Typography>
-                <Input
-                  label="Name"
-                  size="lg"
-                  color='blue-gray'
-                  name="name"
-                  required
-                  value={newSculpture.name}
-                  onChange={handleChange}
-                  className="dark:text-gray-300"
+              <Input
+                label="Name"
+                size="lg"
+                color="blue-gray"
+                name="name"
+                required
+                value={newSculpture.name}
+                onChange={handleChange}
+                className="dark:text-gray-300"
+              />
+              <Input
+                label="Description"
+                size="lg"
+                color="blue-gray"
+                name="description"
+                required
+                value={newSculpture.description}
+                onChange={handleChange}
+                className="dark:text-gray-300"
+              />
+              <Input
+                label="Author"
+                size="lg"
+                color="blue-gray"
+                name="author"
+                required
+                value={newSculpture.author}
+                onChange={handleChange}
+                className="dark:text-gray-300"
+              />
+              <Input
+                label="Image URL"
+                size="lg"
+                color="blue-gray"
+                name="image"
+                required
+                value={newSculpture.image}
+                onChange={handleChange}
+                className="dark:text-gray-300"
+              />
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  name="status"
+                  checked={newSculpture.status}
+                  onChange={() => setNewSculpture(prev => ({ ...prev, status: !prev.status }))}
                 />
-                <Input
-                  label="Description"
-                  size="lg"
-                  color='blue-gray'
-                  name="description"
-                  required
-                  value={newSculpture.description}
-                  onChange={handleChange}
-                  className="dark:text-gray-300"
-                />
-                <Input
-                  label="Author"
-                  size="lg"
-                  color='blue-gray'
-                  name="author"
-                  required
-                  value={newSculpture.author}
-                  onChange={handleChange}
-                  className="dark:text-gray-300"
-                />
-                <Input
-                  label="Image URL"
-                  size="lg"
-                  color='blue-gray'
-                  name="image"
-                  required
-                  value={newSculpture.image}
-                  onChange={handleChange}
-                  className="dark:text-gray-300"
-                />
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="status"
-                    checked={newSculpture.status}
-                    onChange={() => setNewSculpture(prev => ({ ...prev, status: !prev.status }))}
-                  />
-                  <span>Status</span>
-                </label>
+                <span>Status</span>
+              </label>
             </CardBody>
             <CardFooter className="pt-0">
               <Button variant="gradient" fullWidth type="submit">
