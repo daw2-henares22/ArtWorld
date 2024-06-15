@@ -9,7 +9,7 @@ import { useGlobalContext } from '../context/globalContext';
 
 export const Header = () => {
   const { t } = useTranslation();
-  const { token, setToken } = useGlobalContext();
+  const { token, setToken, isAdmin } = useGlobalContext();
   let navigate = useNavigate();
 
   function changeDarkMode() {
@@ -38,6 +38,9 @@ export const Header = () => {
               <>
                 <li><Link to="/sculptures" className="text-white dark:text-blue-gray-800 dark:hover:text-blue-gray-400 hover:text-blue-gray-400 hover:scale-x-105 hover:scale-y-105 transition duration-150 shadow-lg hover:shadow-xl hover:shadow-white/50 shadow-white/50 dark:hover:shadow-blue-gray-800/50 dark:shadow-blue-gray-800/50">{t('Sculptures')}</Link></li>
                 <li><Link to="/paintings" className="text-white dark:text-blue-gray-800 dark:hover:text-blue-gray-400 hover:text-blue-gray-400 hover:scale-x-105 hover:scale-y-105 transition duration-150 shadow-lg hover:shadow-xl hover:shadow-white/50 shadow-white/50 dark:hover:shadow-blue-gray-800/50 dark:shadow-blue-gray-800/50">{t('Paintings')}</Link></li>
+                {isAdmin && (
+                  <li><Link to="/users" className="text-white dark:text-blue-gray-800 dark:hover:text-blue-gray-400 hover:text-blue-gray-400 hover:scale-x-105 hover:scale-y-105 transition duration-150 shadow-lg hover:shadow-xl hover:shadow-white/50 shadow-white/50 dark:hover:shadow-blue-gray-800/50 dark:shadow-blue-gray-800/50">{t('Users')}</Link></li>
+                )}
               </>
             )}
             <li><LanguageToggleButton /></li>

@@ -8,6 +8,7 @@ const resources = {
     translation: {
       "Home":"Home",
       "Welcome":"Welcome",
+      "Users":"Users",
       "Rubén Henares Hidalgo&apos; art page, to make known the art of the world.":"Rubén Henares Hidalgo's art page, to make known the art of the world.",
       "Sculptures": "Sculptures",
       "Paintings": "Paintings",
@@ -25,6 +26,7 @@ const resources = {
     translation: {
       "Home":"Inicio",
       "Welcome":"Bienvenido/a",
+      "Users":"Usuarios",
       "Rubén Henares Hidalgo&apos; art page, to make known the art of the world.":"Página de arte de Rubén Henares Hidalgo, para dar a conocer el arte del mundo.",
       "Sculptures": "Esculturas",
       "Paintings": "Pinturas",

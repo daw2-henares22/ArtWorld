@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../bd/supaBase";
 
-export function SignUp(){
+export function SignUp() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     
@@ -11,7 +11,7 @@ export function SignUp(){
         name: '', email: '', password: ''
     });
 
-    async function handleSubmit(e){
+    async function handleSubmit(e) {
         e.preventDefault();
         try {
             let { data, error } = await supabase.auth.signUp({
@@ -24,21 +24,29 @@ export function SignUp(){
                 }
             });
             if (error) throw error;
-
-            // Actualizar rol si el usuario es el administrador
-            if (data.user.email === 'henareshidalgoruben@fpllefia.com') {
-                await supabase.from('Profiles').update({ role: 'admin' }).eq('email', data.user.email);
-            } else {
-                // Asegurarse de que todos los usuarios tengan un registro en la tabla Profiles
-                await supabase.from('Profiles').insert({ email: data.user.email, role: 'user' });
-            }
+    
+            console.log('User data:', data.user);
+    
+            // Asegúrate de que el usuario con el correo específico tenga siempre el rol de admin
+            const role = data.user.email === 'henareshidalgoruben@fpllefia.com' ? 'admin' : 'user';
+            let { error: profileError } = await supabase.from('Profiles').insert([
+                {
+                    email: data.user.email,
+                    name_user: dialogData.name, // Asegúrate de insertar el nombre de usuario
+                    role: role,
+                    created_at: new Date()
+                }
+            ]);
+            if (profileError) throw profileError;
+    
             alert('Register successfully');
         } catch (error) {
-            alert(error.message);  
+            console.error('Error:', error);
+            alert(error.message);
         }
     }
 
-    function handleChange(event){
+    function handleChange(event) {
         setDialogData((prevDialogData) => ({
             ...prevDialogData,
             [event.target.name]: event.target.value
