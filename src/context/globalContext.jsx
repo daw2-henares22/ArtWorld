@@ -6,6 +6,9 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isUser, setIsUser] = useState(false);
+    const [canAccessPaintings, setCanAccessPaintings] = useState(false);
+    const [canAccessSculptures, setCanAccessSculptures] = useState(false);
 
     useEffect(() => {
         const session = supabase.auth.getSession();
@@ -22,6 +25,9 @@ export const GlobalProvider = ({ children }) => {
             } else {
                 setToken(null);
                 setIsAdmin(false);
+                setIsUser(false);
+                setCanAccessPaintings(false);
+                setCanAccessSculptures(false);
             }
         });
 
@@ -33,22 +39,28 @@ export const GlobalProvider = ({ children }) => {
     const fetchUserRole = async (userEmail) => {
         if (userEmail === 'henareshidalgoruben@fpllefia.com') {
             setIsAdmin(true);
+            setIsUser(false);
+            setCanAccessPaintings(true);
+            setCanAccessSculptures(true);
             return;
         }
         const { data, error } = await supabase
             .from('Profiles')
-            .select('role')
+            .select('role, can_access_paintings, can_access_sculptures')
             .eq('email', userEmail)
             .single();
         if (data) {
             setIsAdmin(data.role === 'admin');
+            setIsUser(data.role === 'user');
+            setCanAccessPaintings(data.can_access_paintings);
+            setCanAccessSculptures(data.can_access_sculptures);
         } else if (error) {
             console.error('Error fetching user role:', error);
         }
     };
 
     return (
-        <GlobalContext.Provider value={{ token, isAdmin, setToken, setIsAdmin }}>
+        <GlobalContext.Provider value={{ token, isAdmin, isUser, canAccessPaintings, canAccessSculptures, setToken, setIsAdmin, setIsUser }}>
             {children}
         </GlobalContext.Provider>
     );
