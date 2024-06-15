@@ -6,17 +6,21 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [isUser, setIsUser] = useState(false);
-    const [canAccessPaintings, setCanAccessPaintings] = useState(false);
-    const [canAccessSculptures, setCanAccessSculptures] = useState(false);
 
     useEffect(() => {
-        const session = supabase.auth.getSession();
-        if (session?.data?.session) {
-            const userEmail = session.data.session.user.email;
-            setToken(session.data.session.access_token);
-            fetchUserRole(userEmail);
-        }
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                const userEmail = session.user.email;
+                setToken(session.access_token);
+                fetchUserRole(userEmail);
+            } else {
+                setToken(null);
+                setIsAdmin(false);
+            }
+        };
+
+        checkSession();
 
         const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session?.user) {
@@ -25,9 +29,6 @@ export const GlobalProvider = ({ children }) => {
             } else {
                 setToken(null);
                 setIsAdmin(false);
-                setIsUser(false);
-                setCanAccessPaintings(false);
-                setCanAccessSculptures(false);
             }
         });
 
@@ -39,28 +40,22 @@ export const GlobalProvider = ({ children }) => {
     const fetchUserRole = async (userEmail) => {
         if (userEmail === 'henareshidalgoruben@fpllefia.com') {
             setIsAdmin(true);
-            setIsUser(false);
-            setCanAccessPaintings(true);
-            setCanAccessSculptures(true);
             return;
         }
         const { data, error } = await supabase
             .from('Profiles')
-            .select('role, can_access_paintings, can_access_sculptures')
+            .select('role')
             .eq('email', userEmail)
             .single();
         if (data) {
             setIsAdmin(data.role === 'admin');
-            setIsUser(data.role === 'user');
-            setCanAccessPaintings(data.can_access_paintings);
-            setCanAccessSculptures(data.can_access_sculptures);
         } else if (error) {
             console.error('Error fetching user role:', error);
         }
     };
 
     return (
-        <GlobalContext.Provider value={{ token, isAdmin, isUser, canAccessPaintings, canAccessSculptures, setToken, setIsAdmin, setIsUser }}>
+        <GlobalContext.Provider value={{ token, isAdmin, setToken, setIsAdmin }}>
             {children}
         </GlobalContext.Provider>
     );

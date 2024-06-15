@@ -4,13 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../bd/supaBase';
 
 export const Users = () => {
-    const { token, isAdmin, fetchUserRole } = useGlobalContext();
+    const { token, isAdmin } = useGlobalContext();
     const [users, setUsers] = useState([]);
-    const [editingUser, setEditingUser] = useState(null);
-    const [newName, setNewName] = useState('');
-    const [newRole, setNewRole] = useState('');
-    const [newCanAccessPaintings, setNewCanAccessPaintings] = useState(false);
-    const [newCanAccessSculptures, setNewCanAccessSculptures] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,17 +17,17 @@ export const Users = () => {
     }, [isAdmin, navigate]);
 
     const fetchUsers = async () => {
-        try {
-            let { data, error } = await supabase
-                .from('Profiles')
-                .select('*')
-                .neq('email', 'henareshidalgoruben@fpllefia.com'); // Excluir el usuario con el correo específico
-            if (error) throw error;
-            setUsers(data);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
-    };
+      try {
+          let { data, error } = await supabase
+              .from('Profiles')
+              .select('*')
+              .neq('email', 'henareshidalgoruben@fpllefia.com'); // Excluir el usuario con el correo específico
+          if (error) throw error;
+          setUsers(data);
+      } catch (error) {
+          console.error("Error fetching users:", error);
+      }
+  };
 
     const handleDeleteUser = async (userId) => {
         try {
@@ -47,45 +42,35 @@ export const Users = () => {
         }
     };
 
-    const handleEditUser = (user) => {
-        setEditingUser(user.id);
-        setNewName(user.name_user);
-        setNewRole(user.role);
-        setNewCanAccessPaintings(user.can_access_paintings);
-        setNewCanAccessSculptures(user.can_access_sculptures);
-    };
-
-    const handleSaveUser = async (userId) => {
+    const handleEditUser = async (userId, updatedUser) => {
         try {
             let { error } = await supabase
                 .from('Profiles')
-                .update({ 
-                    name_user: newName, 
-                    role: newRole, 
-                    can_access_paintings: newCanAccessPaintings, 
-                    can_access_sculptures: newCanAccessSculptures 
-                })
+                .update(updatedUser)
                 .eq('id', userId);
             if (error) throw error;
-            setUsers(users.map(user => user.id === userId ? { 
-                ...user, 
-                name_user: newName, 
-                role: newRole, 
-                can_access_paintings: newCanAccessPaintings, 
-                can_access_sculptures: newCanAccessSculptures 
-            } : user));
-            setEditingUser(null);
-            setNewName('');
-            setNewRole('');
-            setNewCanAccessPaintings(false);
-            setNewCanAccessSculptures(false);
+            setUsers(users.map(user => user.id === userId ? { ...user, ...updatedUser } : user));
 
+            // Si el usuario actualizó su propio rol, refrescar el contexto global
             const session = supabase.auth.session();
             if (session && session.user.id === userId) {
-                fetchUserRole(session.user.email);
+                fetchUserRole(userId);
             }
         } catch (error) {
             console.error("Error updating user:", error);
+        }
+    };
+
+    const fetchUserRole = async (userId) => {
+        const { data, error } = await supabase
+            .from('Profiles')
+            .select('role')
+            .eq('id', userId)
+            .single();
+        if (data) {
+            setIsAdmin(data.role === 'admin');
+        } else if (error) {
+            console.error('Error fetching user role:', error);
         }
     };
 
@@ -99,8 +84,6 @@ export const Users = () => {
                     <tr>
                         <th className="py-2">Name</th>
                         <th className="py-2">Role</th>
-                        <th className="py-2">Can Access Paintings</th>
-                        <th className="py-2">Can Access Sculptures</th>
                         <th className="py-2">Actions</th>
                     </tr>
                 </thead>
@@ -108,60 +91,22 @@ export const Users = () => {
                     {users.map(user => (
                         <tr key={user.id}>
                             <td className="py-2">
-                                {editingUser === user.id ? (
-                                    <input 
-                                        type="text" 
-                                        value={newName} 
-                                        onChange={(e) => setNewName(e.target.value)} 
-                                    />
-                                ) : (
-                                    user.name_user
-                                )}
+                                <input 
+                                    type="text" 
+                                    value={user.name_user} // Asegúrate de usar name_user
+                                    onChange={(e) => handleEditUser(user.id, { name_user: e.target.value })} 
+                                />
                             </td>
                             <td className="py-2">
-                                {editingUser === user.id ? (
-                                    <select 
-                                        value={newRole} 
-                                        onChange={(e) => setNewRole(e.target.value)}
-                                    >
-                                        <option value="user">User</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                ) : (
-                                    user.role
-                                )}
+                                <select 
+                                    value={user.role} 
+                                    onChange={(e) => handleEditUser(user.id, { role: e.target.value })}>
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
                             </td>
                             <td className="py-2">
-                                {editingUser === user.id ? (
-                                    <input 
-                                        type="checkbox" 
-                                        checked={newCanAccessPaintings} 
-                                        onChange={(e) => setNewCanAccessPaintings(e.target.checked)} 
-                                    />
-                                ) : (
-                                    user.can_access_paintings ? 'Yes' : 'No'
-                                )}
-                            </td>
-                            <td className="py-2">
-                                {editingUser === user.id ? (
-                                    <input 
-                                        type="checkbox" 
-                                        checked={newCanAccessSculptures} 
-                                        onChange={(e) => setNewCanAccessSculptures(e.target.checked)} 
-                                    />
-                                ) : (
-                                    user.can_access_sculptures ? 'Yes' : 'No'
-                                )}
-                            </td>
-                            <td className="py-2">
-                                {editingUser === user.id ? (
-                                    <button onClick={() => handleSaveUser(user.id)}>Save</button>
-                                ) : (
-                                    <>
-                                        <button onClick={() => handleEditUser(user)}>Edit</button>
-                                        <button onClick={() => handleDeleteUser(user.id)}>Delete</button>
-                                    </>
-                                )}
+                                <button onClick={() => handleDeleteUser(user.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}

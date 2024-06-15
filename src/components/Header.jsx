@@ -6,19 +6,26 @@ import { Login } from "./Login";
 import { SignUp } from "./SignUp";
 import { Button } from "@material-tailwind/react";
 import { useGlobalContext } from '../context/globalContext';
+import { supabase } from '../bd/supaBase';  // Asegúrate de importar supabase
 
 export const Header = () => {
   const { t } = useTranslation();
-  const { token, setToken, isAdmin } = useGlobalContext();
+  const { token, setToken, isAdmin, setIsAdmin } = useGlobalContext();
   let navigate = useNavigate();
 
   function changeDarkMode() {
     document.documentElement.classList.toggle('dark');
   }
 
-  function handleLogout() {
-    setToken(null);
-    navigate('/');
+  async function handleLogout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error during logout:', error);
+    } else {
+      setToken(null);
+      setIsAdmin(false);
+      navigate('/');
+    }
   }
 
   return (
