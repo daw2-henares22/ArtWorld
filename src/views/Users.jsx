@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../bd/supaBase';
+import { supabase, supabaseService } from '../bd/supaBase';
 
 export const Users = () => {
     const { token, isAdmin } = useGlobalContext();
@@ -17,25 +17,41 @@ export const Users = () => {
     }, [isAdmin, navigate]);
 
     const fetchUsers = async () => {
-      try {
-          let { data, error } = await supabase
-              .from('Profiles')
-              .select('*')
-              .neq('email', 'henareshidalgoruben@fpllefia.com'); // Excluir el usuario con el correo específico
-          if (error) throw error;
-          setUsers(data);
-      } catch (error) {
-          console.error("Error fetching users:", error);
-      }
-  };
+        try {
+            let { data, error } = await supabase
+                .from('Profiles')
+                .select('*')
+                .neq('email', 'henareshidalgoruben@fpllefia.com'); // Excluir el usuario con el correo específico
+            if (error) throw error;
+            setUsers(data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
     const handleDeleteUser = async (userId) => {
         try {
+            // Obtener el UID del usuario desde la tabla Profiles
+            const { data: user, error: fetchError } = await supabase
+                .from('Profiles')
+                .select('uid')
+                .eq('id', userId)
+                .single();
+            
+            if (fetchError) throw fetchError;
+            const userUID = user.uid;
+    
+            // Elimina al usuario del Authenticator usando el UID
+            const { error: authError } = await supabaseService.auth.admin.deleteUser(userUID);
+            if (authError) throw authError;
+    
+            // Elimina al usuario de la tabla Profiles
             let { error } = await supabase
                 .from('Profiles')
                 .delete()
                 .eq('id', userId);
             if (error) throw error;
+    
             setUsers(users.filter(user => user.id !== userId));
         } catch (error) {
             console.error("Error deleting user:", error);
@@ -50,7 +66,7 @@ export const Users = () => {
                 .eq('id', userId);
             if (error) throw error;
             setUsers(users.map(user => user.id === userId ? { ...user, ...updatedUser } : user));
-
+    
             // Si el usuario actualizó su propio rol, refrescar el contexto global
             const session = supabase.auth.session();
             if (session && session.user.id === userId) {

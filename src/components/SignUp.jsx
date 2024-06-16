@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Checkbox, Dialog, Input, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardFooter, Dialog, Input, Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../bd/supaBase";
@@ -16,21 +16,20 @@ export function SignUp() {
         try {
             let { data, error } = await supabase.auth.signUp({
                 email: dialogData.email,
-                password: dialogData.password,
-                options: {
-                    data: {
-                        name: dialogData.name
-                    }
-                }
+                password: dialogData.password
             });
             if (error) throw error;
     
             console.log('User data:', data.user);
+
+            // Obtener el uid del usuario creado
+            const uid = data.user.id;
     
             // Asegúrate de que el usuario con el correo específico tenga siempre el rol de admin
             const role = data.user.email === 'henareshidalgoruben@fpllefia.com' ? 'admin' : 'user';
             let { error: profileError } = await supabase.from('Profiles').insert([
                 {
+                    uid: uid, // Asegúrate de insertar el uid del usuario
                     email: data.user.email,
                     name_user: dialogData.name, // Asegúrate de insertar el nombre de usuario
                     role: role,

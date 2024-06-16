@@ -128,7 +128,7 @@ export function Sculptures() {
       <h1 className="dark:text-white text-blue-gray-800 text-3xl font-bold mb-4">{t('Sculptures')}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {sculptures.map(sculpture => (
-          <div key={sculpture.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex flex-col h-full">
+          <div key={sculpture.id} className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md flex flex-col h-full">
             <button className="w-full transition duration-150 hover:scale-x-105 hover:scale-y-105">
               <img onClick={() => handleOpen(sculpture)} src={sculpture.image} alt={t(sculpture.name)} className="w-full h-48 object-cover mb-4 rounded-md" />
             </button>
