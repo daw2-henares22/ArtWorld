@@ -4,18 +4,17 @@ import { supabase } from '../bd/supaBase';
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
+    const [session, setSession] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const checkSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
-                const userEmail = session.user.email;
-                setToken(session.access_token);
-                fetchUserRole(userEmail);
+                setSession(session);
+                fetchUserRole(session.user.email);
             } else {
-                setToken(null);
+                setSession(null);
                 setIsAdmin(false);
             }
         };
@@ -24,10 +23,10 @@ export const GlobalProvider = ({ children }) => {
 
         const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session?.user) {
-                setToken(session.access_token);
+                setSession(session);
                 fetchUserRole(session.user.email);
             } else {
-                setToken(null);
+                setSession(null);
                 setIsAdmin(false);
             }
         });
@@ -55,7 +54,7 @@ export const GlobalProvider = ({ children }) => {
     };
 
     return (
-        <GlobalContext.Provider value={{ token, isAdmin, setToken, setIsAdmin }}>
+        <GlobalContext.Provider value={{ session, isAdmin, setSession, setIsAdmin }}>
             {children}
         </GlobalContext.Provider>
     );

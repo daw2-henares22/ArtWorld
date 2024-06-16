@@ -16,7 +16,12 @@ export function SignUp() {
         try {
             let { data, error } = await supabase.auth.signUp({
                 email: dialogData.email,
-                password: dialogData.password
+                password: dialogData.password,
+                options: {
+                    data: {
+                        name: dialogData.name  // Agregar el nombre a user_metadata
+                    }
+                }
             });
             if (error) throw error;
     

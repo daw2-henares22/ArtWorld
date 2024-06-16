@@ -5,7 +5,7 @@ import { supabase } from "../bd/supaBase";
 import { useGlobalContext } from '../context/globalContext';
 
 export const Login = () => {
-  const { setToken } = useGlobalContext();
+  const { setSession } = useGlobalContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
   let navigate = useNavigate();
@@ -18,29 +18,25 @@ export const Login = () => {
     }));
   }
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
-        let { data, error } = await supabase.auth.signInWithPassword({
-            email: dialogData.email,
-            password: dialogData.password
-        });
-        if (error) throw error;
-        setToken(data)
-        navigate('/')
+      let { data, error } = await supabase.auth.signInWithPassword({
+        email: dialogData.email,
+        password: dialogData.password
+      });
+      if (error) throw error;
+      setSession(data.session);
+      navigate('/');
     } catch (error) {
-        // console.error('Error logging in:', error.message);
-        // alert(error);
-        if(!error.message.includes(dialogData.password)){
-            alert('Wrong password')
-        }else if(!error.message.includes(dialogData.email)){
-            alert('This email is not registered.')
-
-        }// if(!error.message.includes(!dialogData.email && !dialogData.password)){
-        //     alert('Wrong password and email not registered')
-        // }
+      console.error('Error logging in:', error.message);
+      if (error.message.includes('Invalid login credentials')) {
+        alert('Wrong email or password');
+      } else {
+        alert('Error logging in');
+      }
     }
-}
+  }
 
   return (
     <>
