@@ -7,6 +7,10 @@ const resources = {
   en: {
     translation: {
       "Home":"Home",
+      "Name":"Name",
+      "Role":"Role",
+      "Actions":"Actions",
+      "User Management":"User Management",
       "Welcome":"Welcome",
       "Users":"Users",
       "Rubén Henares Hidalgo&apos; art page, to make known the art of the world.":"Rubén Henares Hidalgo's art page, to make known the art of the world.",
@@ -25,6 +29,10 @@ const resources = {
   es: {
     translation: {
       "Home":"Inicio",
+      "Name":"Nombre",
+      "Role":"Rol",
+      "Actions":"Acciones",
+      "User Management":"Gestión de Usuarios",
       "Welcome":"Bienvenido/a",
       "Users":"Usuarios",
       "Rubén Henares Hidalgo&apos; art page, to make known the art of the world.":"Página de arte de Rubén Henares Hidalgo, para dar a conocer el arte del mundo.",
