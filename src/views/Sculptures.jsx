@@ -124,7 +124,7 @@ export function Sculptures() {
   };
 
   return (
-    <div className="container mx-auto py-8 relative">
+    <div className="container mx-auto py-8 pb-16 relative">
       <h1 className="dark:text-white text-blue-gray-800 text-3xl font-bold mb-4">{t('Sculptures')}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {sculptures.map(sculpture => (
@@ -156,7 +156,7 @@ export function Sculptures() {
       </div>
       
       {isAdmin && (
-        <div className="fixed bottom-4 right-4">
+        <div className="absolute bottom-20 right-4">
           <Button onClick={handleOpenN} variant="gradient">Add Sculpture</Button>
         </div>
       )}
