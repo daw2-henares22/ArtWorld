@@ -2,8 +2,10 @@ import { Button, Card, CardBody, CardFooter, Dialog, Input, Typography } from "@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../bd/supaBase";
+import { useTranslation } from "react-i18next";
 
 export function SignUp() {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     
@@ -57,7 +59,7 @@ export function SignUp() {
 
     return (
         <>
-            <Button onClick={handleOpen}>Sign up</Button>
+            <Button onClick={handleOpen}>{t('Sign up')}</Button>
             <Dialog
                 size="xs"
                 open={open}

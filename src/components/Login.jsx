@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../bd/supaBase";
 import { useGlobalContext } from '../context/globalContext';
+import { useTranslation } from "react-i18next";
 
 export const Login = () => {
+  const { t } = useTranslation();
   const { setSession } = useGlobalContext();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -40,7 +42,7 @@ export const Login = () => {
 
   return (
     <>
-      <Button onClick={handleOpen}>Login</Button>
+      <Button onClick={handleOpen}>{t('Login')}</Button>
       <Dialog size="xs" open={open} handler={handleOpen} className="bg-transparent shadow-none">
         <Card className="dark:bg-blue-gray-900 dark:text-white mx-auto w-full max-w-[24rem]">
           <form onSubmit={handleSubmit}>

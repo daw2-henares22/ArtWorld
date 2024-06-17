@@ -147,8 +147,8 @@ export function Paintings() {
             </div>
             {isAdmin && (
               <div className="mt-4 flex justify-between">
-                <Button size="sm" color="blue" onClick={() => handleOpenEdit(painting)}>Edit</Button>
-                <Button size="sm" color="red" onClick={() => handleDelete(painting.id)}>Delete</Button>
+                <Button size="sm" color="blue" onClick={() => handleOpenEdit(painting)}>{t('Edit')}</Button>
+                <Button size="sm" color="red" onClick={() => handleDelete(painting.id)}>{t('Delete')}</Button>
               </div>
             )}
           </div>

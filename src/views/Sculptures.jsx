@@ -147,8 +147,8 @@ export function Sculptures() {
             </div>
             {isAdmin && (
               <div className="mt-4 flex justify-between">
-                <Button size="sm" color="blue" onClick={() => handleOpenEdit(sculpture)}>Edit</Button>
-                <Button size="sm" color="red" onClick={() => handleDelete(sculpture.id)}>Delete</Button>
+                <Button size="sm" color="blue" onClick={() => handleOpenEdit(sculpture)}>{t('Edit')}</Button>
+                <Button size="sm" color="red" onClick={() => handleDelete(sculpture.id)}>{t('Delete')}</Button>
               </div>
             )}
           </div>
