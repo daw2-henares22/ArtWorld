@@ -94,7 +94,7 @@ export const Header = () => {
               </>
             )}
             {session && (
-              <li><Button onClick={handleLogout}>Logout</Button></li>
+              <li><Button onClick={handleLogout}>{t('Logout')}</Button></li>
             )}
           </ul>
         </nav>

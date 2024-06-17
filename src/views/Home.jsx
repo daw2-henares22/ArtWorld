@@ -26,7 +26,7 @@ export function Home() {
                 color="white"
                 className="mb-12 opacity-80"
               >
-                {t("Rubén Henares Hidalgo's art page, to make known the art of the world.")}
+                {t('Rubén Henares Hidalgo&apos; art page, to make known the art of the world.')}
               </Typography>
             </div>
           </div>
@@ -76,7 +76,7 @@ export function Home() {
                 color="white"
                 className="mb-12 opacity-80"
               >
-                {t('Painting is the art of graphic representation using pigments mixed with other binding substances, organic or synthetic. This art uses painting techniques, knowledge of color theory and pictorial composition, and drawing. The practice of the art of painting consists of applying, on a specific surface a sheet of paper, a canvas, a wall, a piece of wood, a fragment of fabric, etc. A specific technique, to obtain a composition of shapes, colors, textures, drawings, etc. giving rise to a work of art according to aesthetic principles.')}
+                {t('Painting is the art of graphic representation using pigments mixed with other binding substances, organic or synthetic. This art uses painting techniques, knowledge of color theory and pictorial composition, and drawing. The practice of the art of painting consists of applying, on a specific surface a sheet of paper, a canvas, a wall, a piece of wood, a fragment of fabric, etc. A specific technique, to obtain a composition of shapes, colors, textures, drawings, etc. giving rise to a work of art according to some aesthetic principles.')}
               </Typography>
             </div>
           </div>
