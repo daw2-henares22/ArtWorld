@@ -1,11 +1,10 @@
-import { Carousel, Typography } from "@material-tailwind/react"
+import { Carousel, Typography } from "@material-tailwind/react";
 import { useTranslation } from "react-i18next";
 
-export function Home (){
-    const { t } = useTranslation();
-    return(
-        <>
-        <Carousel className="">
+export function Home() {
+  const { t } = useTranslation();
+  return (
+    <Carousel className="">
       <div className="relative h-full w-full">
         <img
           src="/jacob.png"
@@ -26,7 +25,7 @@ export function Home (){
               color="white"
               className="mb-12 opacity-80"
             >
-              {t('Rubén Henares Hidalgo&apos; art page, to make known the art of the world.')}
+              {t("Rubén Henares Hidalgo's art page, to make known the art of the world.")}
             </Typography>
           </div>
         </div>
@@ -38,7 +37,7 @@ export function Home (){
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 grid h-full w-full items-center bg-black/75">
-          <div className="w-3/4 pl-12 md:w-2/4 md:pl-20 lg:pl-32">
+          <div className="w-3/4 pl-4 md:w-2/4 md:pl-20 lg:pl-32 text-center md:text-left">
             <Typography
               variant="h1"
               color="white"
@@ -63,7 +62,7 @@ export function Home (){
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 grid h-full w-full items-end bg-black/75">
-          <div className="w-3/4 pl-12 pb-12 md:w-2/4 md:pl-20 md:pb-20 lg:pl-32 lg:pb-32">
+          <div className="w-3/4 pl-4 pb-12 md:w-2/4 md:pl-20 md:pb-20 lg:pl-32 lg:pb-32 text-center md:text-left">
             <Typography
               variant="h1"
               color="white"
@@ -76,12 +75,11 @@ export function Home (){
               color="white"
               className="mb-12 opacity-80"
             >
-              {t('Painting is the art of graphic representation using pigments mixed with other binding substances, organic or synthetic. This art uses painting techniques, knowledge of color theory and pictorial composition, and drawing. The practice of the art of painting consists of applying, on a specific surface a sheet of paper, a canvas, a wall, a piece of wood, a fragment of fabric, etc. A specific technique, to obtain a composition of shapes, colors, textures, drawings, etc. giving rise to a work of art according to some aesthetic principles.')}
+              {t('Painting is the art of graphic representation using pigments mixed with other binding substances, organic or synthetic. This art uses painting techniques, knowledge of color theory and pictorial composition, and drawing. The practice of the art of painting consists of applying, on a specific surface a sheet of paper, a canvas, a wall, a piece of wood, a fragment of fabric, etc. A specific technique, to obtain a composition of shapes, colors, textures, drawings, etc. giving rise to a work of art according to aesthetic principles.')}
             </Typography>
           </div>
         </div>
       </div>
     </Carousel>
-      </>
-    )
+  );
 }

@@ -30,7 +30,7 @@ export const Header = () => {
 
   return (
     <div className="sm:text-xl dark:bg-white bg-blue-gray-900 py-4">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center flex-wrap">
         <div className="text-white dark:text-blue-gray-800 font-bold">
           <Link to="/">ArtWorld</Link>
         </div>
@@ -39,8 +39,8 @@ export const Header = () => {
             {t('Welcome')} {session.user.user_metadata.name}
           </div>
         )}
-        <nav>
-          <ul className="flex space-x-6 font-semibold">
+        <nav className="w-full sm:w-auto">
+          <ul className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6 font-semibold">
             <button
               onClick={changeDarkMode}
               className="h-7 w-7 bg-white dark:bg-blue-gray-800 rounded-md shadow-lg"
