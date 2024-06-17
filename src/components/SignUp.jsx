@@ -25,12 +25,10 @@ export function SignUp() {
             });
             if (error) throw error;
     
-            console.log('User data:', data.user);
+            // console.log('User data:', data.user);
 
-            // Obtener el uid del usuario creado
             const uid = data.user.id;
     
-            // Asegúrate de que el usuario con el correo específico tenga siempre el rol de admin
             const role = data.user.email === 'henareshidalgoruben@fpllefia.com' ? 'admin' : 'user';
             let { error: profileError } = await supabase.from('Profiles').insert([
                 {

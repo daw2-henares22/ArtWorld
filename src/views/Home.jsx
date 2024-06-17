@@ -2,7 +2,7 @@ import { Carousel, Typography } from "@material-tailwind/react"
 import { useTranslation } from "react-i18next";
 
 export function Home (){
-    const { t } = useTranslation(); // Obtener la función de traducción t()
+    const { t } = useTranslation();
     return(
         <>
         <Carousel className="">

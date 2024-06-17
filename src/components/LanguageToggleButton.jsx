@@ -1,4 +1,3 @@
-// Importa useTranslation desde react-i18next
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
