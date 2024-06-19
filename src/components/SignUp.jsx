@@ -21,7 +21,7 @@ export function SignUp() {
                 password: dialogData.password,
                 options: {
                     data: {
-                        name: dialogData.name  // Agregar el nombre a user_metadata
+                        name: dialogData.name
                     }
                 }
             });
@@ -34,9 +34,9 @@ export function SignUp() {
             const role = data.user.email === 'henareshidalgoruben@fpllefia.com' ? 'admin' : 'user';
             let { error: profileError } = await supabase.from('Profiles').insert([
                 {
-                    uid: uid, // Asegúrate de insertar el uid del usuario
+                    uid: uid,
                     email: data.user.email,
-                    name_user: dialogData.name, // Asegúrate de insertar el nombre de usuario
+                    name_user: dialogData.name,
                     role: role,
                     created_at: new Date()
                 }
