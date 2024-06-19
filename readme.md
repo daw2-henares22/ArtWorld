@@ -80,7 +80,12 @@ npm create vite .
         </button>
 
 -Añadir traducción al proyecto
-    npm install i18next react-i18next
+    Es una libreria
+    npm install i18next
+    npm i react-i18next que permite la integración con el proyecto de react
+    
+    import i18n from 'i18next';
+    import { initReactI18next } from 'react-i18next';
 
     Crear un i18next.jsx en la carpeta src
     
