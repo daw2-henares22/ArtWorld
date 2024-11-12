@@ -1,10 +1,16 @@
+#Readme.
+
+##Mas información detallada y del código, en la <a href="https://daw2-henares22.github.io/ArtWorld/MemoryArtWorldSpanish.pdf" target="_blank">Memoria</a>.
+
+##Explicación breve de instalaciones
+
 npm create vite .
     React
     Javascript
     npm install
     npm run dev
 
--Install Tailwindcss with Vite
+###Install Tailwindcss with Vite
     npm install -D tailwindcss postcss autoprefixer
     npx tailwindcss init -p
 
@@ -28,7 +34,7 @@ npm create vite .
     }
 
 
--Añadir mas css:
+###Añadir mas css:
     npm i @material-tailwind/react
 
     tailwind.config.js añadir esto:
@@ -50,7 +56,7 @@ npm create vite .
         plugins: [],
     })
 
--Añadir react-router-dom:
+###Añadir react-router-dom:
     npm i react-router-dom
 
         (Se instala para que las páginas estén entrelazadas con la etiqueta
@@ -93,7 +99,7 @@ npm create vite .
 
             (El GlobalProvider es una constante de GlobalContext.jsx que indica cuando se inicia y se quita la sesión, y de si es admin o usuario)
 
--Añadí dark mode al proyecto
+###Añadí dark mode al proyecto
     tailwind.js añadir esto:
         darkMode=['class']
     
@@ -122,7 +128,7 @@ npm create vite .
             <ImContrast className='w-full dark:text-white text-blue-gray-800'/>
         </button>
 
--Añadir traducción al proyecto
+###Añadir traducción al proyecto
     Es una libreria
     npm install i18next
     npm i react-i18next que permite la integración con el proyecto de react
@@ -141,35 +147,31 @@ npm create vite .
 https://www.tailwindcss-animated.com/
 https://github.com/new-data-services/tailwindcss-animated#readme
 
-npm i tailwindcss-animated
+###Añadir animaciones
+    npm i tailwindcss-animated
 
-// tailwind.config.js
-module.exports = {
-  // ...
-  plugins: [
-    require('tailwindcss-animated')
-  ],
-}
+    // tailwind.config.js
+    module.exports = {
+      // ...
+      plugins: [
+        require('tailwindcss-animated')
+      ],
+    }
 
-en este caso solo copias el require('tailwindcss-animated') y el tailwind.config.js te quedaría así:
+    en este caso solo copias el require('tailwindcss-animated') y el tailwind.config.js te quedaría así:
 
-/** @type {import('tailwindcss').Config} */
-const withMT = require('@material-tailwind/react/utils/withMT') 
-module.exports = withMT( {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  darkMode: ['class'],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    require('tailwindcss-animated')
-  ],
-})
-
-
-**Mas información detallada y del código en la Memoria:
-
-<a href="./Memoria.pdf" target="_blank">Memoria del proyecto</a>
+    /** @type {import('tailwindcss').Config} */
+    const withMT = require('@material-tailwind/react/utils/withMT') 
+    module.exports = withMT( {
+      content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+      ],
+      darkMode: ['class'],
+      theme: {
+        extend: {},
+      },
+      plugins: [
+        require('tailwindcss-animated')
+      ],
+    })
