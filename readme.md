@@ -50,6 +50,49 @@ npm create vite .
         plugins: [],
     })
 
+-Añadir react-router-dom:
+    npm i react-router-dom
+
+        (Se instala para que las páginas estén entrelazadas con la etiqueta
+        Route mediante etiquetas Routes)
+
+        <Routes>
+        <Route path='/' element={<Home />} />
+        <Routes/>
+
+        (Y para navegar entre ellas, debe de usarse la etiqueta Link)
+
+        <Link to="/">ArtWorld</Link>
+
+        (Pero para que el router funcione, se debe de poner una etiqueta
+        BrowserRouter en main.jsx).
+
+        <BrowserRouter>
+        <BrowserRouter/>
+
+        Quedaría así:
+
+            import React from 'react'
+            import ReactDOM from 'react-dom/client'
+            import App from './App'
+            import './index.css'
+            import { BrowserRouter } from 'react-router-dom'
+            import './i18n'
+            import { GlobalProvider } from './context/globalContext'
+
+
+            ReactDOM.createRoot(document.getElementById('root')).render(
+              <React.StrictMode>
+                <GlobalProvider>
+                  <BrowserRouter>
+                    <App />
+                  </BrowserRouter>
+                </GlobalProvider>
+              </React.StrictMode>,
+            )
+
+            (El GlobalProvider es una constante de GlobalContext.jsx que indica cuando se inicia y se quita la sesión, y de si es admin o usuario)
+
 -Añadí dark mode al proyecto
     tailwind.js añadir esto:
         darkMode=['class']
@@ -125,3 +168,8 @@ module.exports = withMT( {
     require('tailwindcss-animated')
   ],
 })
+
+
+**Mas información detallada y del código en la Memoria:
+
+<a href="./Memoria.pdf" target="_blank">Memoria del proyecto</a>
