@@ -1,8 +1,8 @@
-<h1>Readme</h1>.
+<h1>Como hice el proyecto?</h1>.
 
-##Mas información detallada y del código, en la <a href="https://daw2-henares22.github.io/ArtWorld/MemoryArtWorldSpanish.pdf" target="_blank">Memoria</a>.
+<h2>Mas información detallada y del código, en la <a href="https://daw2-henares22.github.io/ArtWorld/MemoryArtWorldSpanish.pdf" target="_blank">Memoria</a>.</h2>
 
-##Explicación breve de instalaciones
+<h2>Explicación breve de instalaciones</h2>
 
 npm create vite .
     React
@@ -10,7 +10,7 @@ npm create vite .
     npm install
     npm run dev
 
-###Install Tailwindcss with Vite
+<h3>Instalar Tailwindcss con Vite</h3>
     npm install -D tailwindcss postcss autoprefixer
     npx tailwindcss init -p
 
@@ -34,7 +34,7 @@ npm create vite .
     }
 
 
-###Añadir mas css:
+<h3>Añadir mas css:</h3>
     npm i @material-tailwind/react
 
     tailwind.config.js añadir esto:
@@ -56,7 +56,7 @@ npm create vite .
         plugins: [],
     })
 
-###Añadir react-router-dom:
+<h3>Añadir react-router-dom:</h3>
     npm i react-router-dom
 
         (Se instala para que las páginas estén entrelazadas con la etiqueta
@@ -99,7 +99,7 @@ npm create vite .
 
             (El GlobalProvider es una constante de GlobalContext.jsx que indica cuando se inicia y se quita la sesión, y de si es admin o usuario)
 
-###Añadí dark mode al proyecto
+<h3>Añadí dark mode al proyecto</h3>
     tailwind.js añadir esto:
         darkMode=['class']
     
@@ -128,7 +128,7 @@ npm create vite .
             <ImContrast className='w-full dark:text-white text-blue-gray-800'/>
         </button>
 
-###Añadir traducción al proyecto
+<h3>Añadir traducción al proyecto</h3>
     Es una libreria
     npm install i18next
     npm i react-i18next que permite la integración con el proyecto de react
@@ -144,10 +144,10 @@ npm create vite .
     tailwindcss animated:
     Sirve para poner mas aniamciones y sus configuraciones
 
-https://www.tailwindcss-animated.com/
-https://github.com/new-data-services/tailwindcss-animated#readme
+    https://www.tailwindcss-animated.com/
+    https://github.com/new-data-services/tailwindcss-animated#readme
 
-###Añadir animaciones
+<h3>Añadir animaciones</h3>
     npm i tailwindcss-animated
 
     // tailwind.config.js
