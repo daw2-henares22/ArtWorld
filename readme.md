@@ -1,4 +1,4 @@
-<h1>Como hice el proyecto?</h1>.
+<h1>Como hice el proyecto?</h1>
 
 <h2>Mas información detallada y del código, en la <a href="https://daw2-henares22.github.io/ArtWorld/MemoryArtWorldSpanish.pdf" target="_blank">Memoria</a>.</h2>
 
