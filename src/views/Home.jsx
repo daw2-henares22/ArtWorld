@@ -26,7 +26,7 @@ export function Home() {
                 color="white"
                 className="mb-12 opacity-80"
               >
-                {t('Rubén Henares Hidalgo&apos; art page, to make known the art of the world.')}
+                {t('Rubénn Henares Hidalgo&apos; art page, to make known the art of the world.')}
               </Typography>
             </div>
           </div>
