@@ -1,0 +1,9 @@
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://lxzjwielgpjsgpbanddb.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4emp3aWVsZ3Bqc2dwYmFuZGRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkxNTE1MzMsImV4cCI6MjA0NDcyNzUzM30.cIxG4aIZSGpQGSP5yUgYka9aAG6GaHZ1lQB0TnVbQNs'
+export const supabase = createClient(supabaseUrl, supabaseKey)
+
+const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4emp3aWVsZ3Bqc2dwYmFuZGRiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTE1MTUzMywiZXhwIjoyMDQ0NzI3NTMzfQ.8hAE_1NmnW4mDKePAVrGvtvW2LwULIbLCwTAhjBxmM0'
+export const supabaseService = createClient(supabaseUrl, supabaseServiceKey);
