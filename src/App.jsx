@@ -8,7 +8,7 @@ import { Users } from './views/Users';
 import { Login } from './components/Login';
 import { SignUp } from './components/SignUp';
 import { Footer } from './components/Footer';
-import { useGlobalContext } from './context/globalContext';
+import { useGlobalContext } from './context/GlobalContext';
 import { Navigate } from 'react-router-dom';
 
 const AdminRoute = ({ children }) => {

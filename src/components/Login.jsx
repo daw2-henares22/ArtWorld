@@ -2,7 +2,7 @@ import { Button, Card, CardBody, CardFooter, Checkbox, Dialog, Input, Typography
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../bd/supaBase";
-import { useGlobalContext } from '../context/globalContext';
+import { useGlobalContext } from '../context/GlobalContext';
 import { useTranslation } from "react-i18next";
 
 export const Login = () => {

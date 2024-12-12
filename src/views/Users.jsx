@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useGlobalContext } from '../context/globalContext';
+import { useGlobalContext } from '../context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase, supabaseService } from '../bd/supaBase';
 import { useTranslation } from 'react-i18next';

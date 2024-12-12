@@ -5,7 +5,7 @@ import { LanguageToggleButton } from "./LanguageToggleButton";
 import { Login } from "./Login";
 import { SignUp } from "./SignUp";
 import { Button } from "@material-tailwind/react";
-import { useGlobalContext } from '../context/globalContext';
+import { useGlobalContext } from '../context/GlobalContext';
 import { supabase } from '../bd/supaBase';
 
 export const Header = () => {

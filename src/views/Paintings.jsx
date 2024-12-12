@@ -2,7 +2,7 @@ import { Dialog, Card, CardBody, CardFooter, Input, Typography, Button } from '@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../bd/supaBase';
-import { useGlobalContext } from '../context/globalContext';
+import { useGlobalContext } from '../context/GlobalContext';
 
 export function Paintings() {
   const { t } = useTranslation();
